@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable("Cases", {
+    await queryInterface.createTable("Clients", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,40 +12,36 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      full_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      age: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
 
-      title: {
+      phone_number: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+
       description: DataTypes.TEXT,
-      judge: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      enemy: {
+
+      address: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+
+      city: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      place: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      result: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.ENUM({
-          values: ["opened", "in progress", "closed"],
-        }),
-        allowNull: false,
-      },
-      priority: {
-        type: DataTypes.ENUM({
-          values: ["low", "medium", "high"],
-        }),
-        allowNull: false,
-      },
+      zipcode: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -57,6 +53,6 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable("Cases");
+    await queryInterface.dropTable("Clients");
   },
 };
