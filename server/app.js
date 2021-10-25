@@ -1,6 +1,7 @@
 const express = require("express");
 const { sequelize } = require("./models");
 const caseRouter = require("./routes/cases");
+const logger = require("./utils/logger");
 
 const app = express();
 app.use(express.json());
@@ -9,9 +10,9 @@ app.use(express.json());
 const main = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    logger.info("Connection has been established successfully.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    logger.error("Unable to connect to the database:", error);
   }
 };
 
