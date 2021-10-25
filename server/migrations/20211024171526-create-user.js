@@ -20,12 +20,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
