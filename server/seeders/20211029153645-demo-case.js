@@ -5,7 +5,6 @@ module.exports = {
   up: async (queryInterface) => {
     return queryInterface.bulkInsert("Cases", [
       {
-        uuid: faker.datatype.uuid(),
         userId: 1,
         clientId: 1,
         title: faker.hacker.phrase(),
@@ -20,7 +19,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        uuid: faker.datatype.uuid(),
         userId: 1,
         clientId: 3,
         title: faker.hacker.phrase(),
@@ -35,7 +33,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        uuid: faker.datatype.uuid(),
         userId: 2,
         clientId: 2,
         title: faker.hacker.phrase(),

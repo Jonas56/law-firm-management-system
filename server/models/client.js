@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(Case, { foreignKey: "clientId", as: "cases" });
     }
+    toJSON() {
+      return { ...this.get(), id: undefined };
+    }
   }
+
   Client.init(
     {
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
       full_name: {
         type: DataTypes.STRING,
         allowNull: false,

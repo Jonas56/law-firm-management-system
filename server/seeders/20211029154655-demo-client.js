@@ -5,7 +5,6 @@ module.exports = {
   up: (queryInterface) => {
     return queryInterface.bulkInsert("Clients", [
       {
-        uuid: faker.datatype.uuid(),
         full_name: faker.name.findName(),
         age: faker.datatype.number(80),
         phone_number: faker.phone.phoneNumber(),
@@ -17,7 +16,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        uuid: faker.datatype.uuid(),
         full_name: faker.name.findName(),
         age: faker.datatype.number(80),
         phone_number: faker.phone.phoneNumber(),
@@ -29,7 +27,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        uuid: faker.datatype.uuid(),
         full_name: faker.name.findName(),
         age: faker.datatype.number(80),
         phone_number: faker.phone.phoneNumber(),

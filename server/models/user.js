@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(Case, { foreignKey: "userId", as: "cases" });
     }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        id: undefined,
+        password: undefined,
+      };
+    }
   }
   User.init(
     {
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
       full_name: {
         type: DataTypes.STRING,
         allowNull: false,
