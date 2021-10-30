@@ -26,7 +26,6 @@ module.exports = {
         allowNull: false,
       },
 
-      description: DataTypes.TEXT,
       email: {
         type: DataTypes.STRING,
         allowNull: false,
