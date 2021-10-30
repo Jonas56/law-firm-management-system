@@ -16,4 +16,3 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message: "Successful commit to https://github.com/{{ github.context.payload.repository.owner.name }}/{{ github.context.payload.repository.name}}.\n Diff: {{ github.context.payload.compare }}"
           embed: '{ "title": "{{ commit.title }}", "description": "{{ commit.description }}", "url": "{{ commit.url }}", "author": { "name": "{{ commit.author.name }} ({{ commit.author.username }})", "icon_url": "https://avatars.githubusercontent.com/{{ commit.author.username }}"} }'
-          last-commit-only: false

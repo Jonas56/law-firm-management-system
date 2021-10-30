@@ -6,15 +6,19 @@ caseRouter.get("/", async (req, res) => {
 });
 
 caseRouter.post("/", async (req, res) => {
-  const objCase = req.body;
-  // const clientId = "";
-  // const userId = ""; // from middlware
-  return caseServices.create(req, res, objCase);
+  return caseServices.create(req, res);
 });
 
-caseRouter.get("/:uuid", async (req, res) => {
-  const uuid = req.params.uuid;
-  return caseServices.getById(req, res, uuid);
+caseRouter.get("/:id", async (req, res) => {
+  return caseServices.getById(req, res);
+});
+
+caseRouter.delete("/:id", async (req, res) => {
+  return caseServices.deleteCase(req, res);
+});
+
+caseRouter.put("/:id", async (req, res) => {
+  return caseServices.updateCase(req, res);
 });
 
 module.exports = caseRouter;

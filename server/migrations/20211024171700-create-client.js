@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
       full_name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -26,7 +22,6 @@ module.exports = {
         allowNull: false,
       },
 
-      description: DataTypes.TEXT,
       email: {
         type: DataTypes.STRING,
         allowNull: false,
