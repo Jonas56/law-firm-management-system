@@ -18,10 +18,10 @@ async function create(req, res) {
   const objCase = { ...req.body, userId };
   try {
     const case_law = await Case.create({ ...objCase });
-    return res.status(200).json(case_law);
+    return res.status(201).json(case_law);
   } catch (error) {
     logger.error(error);
-    return res.status(500).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 }
 
@@ -29,7 +29,11 @@ async function getById(req, res) {
   const id = Number(req.params.id);
   try {
     const case_law = await Case.findOne({ where: { id } });
-    return res.status(200).json(case_law);
+    if (case_law) {
+      return res.status(200).json(case_law);
+    } else {
+      return res.status(400).json({ error: "Case not found" });
+    }
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -38,9 +42,12 @@ async function getById(req, res) {
 async function deleteCase(req, res) {
   const id = Number(req.params.id);
   try {
-    const case_law = await Case.findOne({ where: { id } });
-    await case_law.destroy();
-    return res.status(200).json({ message: "Case deleted succesfully" });
+    const case_law = await Case.destroy({ where: { id } });
+    if (case_law) {
+      return res.status(200).json({ message: "Case deleted succesfully" });
+    } else {
+      return res.status(400).json({ error: "Case not found" });
+    }
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
