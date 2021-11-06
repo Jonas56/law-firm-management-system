@@ -1,0 +1,26 @@
+{
+  "name": "law_firm_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix web",
+    "install-app": "npm install-server && npm install-client",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix web",
+    "build-server": "npm run build:ui --prefix server",
+    "deploy": "git push heroku main",
+    "start-app": "npm start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonas56/law-firm-management-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jonas56/law-firm-management-system/issues"
+  },
+  "homepage": "https://github.com/Jonas56/law-firm-management-system#readme"
+}

@@ -18,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         id: undefined,
         clientId: undefined,
         userId: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
       };
     }
   }
