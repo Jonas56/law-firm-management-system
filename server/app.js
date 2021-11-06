@@ -2,9 +2,11 @@ const express = require("express");
 const { sequelize } = require("./models");
 const caseRouter = require("./routes/cases");
 const logger = require("./utils/logger");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "build")));
 
 // Connection to db
 const main = async () => {
@@ -23,5 +25,9 @@ app.get("/ping", (req, res) => {
 });
 
 app.use("/api/cases", caseRouter);
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 module.exports = app;
