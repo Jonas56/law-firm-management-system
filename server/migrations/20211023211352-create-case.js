@@ -11,22 +11,10 @@ module.exports = {
 
       userId: {
         type: DataTypes.INTEGER,
-        references: {
-          model: {
-            tableName: "users",
-          },
-          key: "id",
-        },
         allowNull: false,
       },
       clientId: {
         type: DataTypes.INTEGER,
-        references: {
-          model: {
-            tableName: "clients",
-          },
-          key: "id",
-        },
         allowNull: false,
       },
 

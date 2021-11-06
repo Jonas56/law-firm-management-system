@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Case }) {
       // define association here
-      this.hasMany(Case, { foreignKey: "userId", as: "cases" });
+      this.hasMany(Case, {
+        foreignKey: "userId",
+        as: "cases",
+        onDelete: "CASCADE",
+      });
     }
 
     toJSON() {
