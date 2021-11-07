@@ -1,1 +1,1 @@
-web: npm install-server && npm run start-app
+web: npm run install-server && npm run start-app
