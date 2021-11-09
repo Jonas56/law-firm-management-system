@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import Section2Item from "../components/home/Section2Item";
 
-function Home() {
+function Home(props) {
   return (
     <>
       {" "}
@@ -22,15 +24,23 @@ function Home() {
           </BoxLarge>
         </Section1>
         <Section2>
-          <Cases></Cases>
+          <Cases>
+            {props.cases.slice(0, 5).map((item, id) => (
+              <Section2Item case={item} key={id} />
+            ))}
+          </Cases>
           <Tasks></Tasks>
         </Section2>
       </Container>
     </>
   );
 }
+const mapStateToProps = (state) => {
+  const { cases } = state;
+  return { cases };
+};
 
-export default Home;
+export default connect(mapStateToProps)(Home);
 
 const Container = styled.div`
   display: flex;
@@ -86,8 +96,12 @@ const Section2 = styled.div`
 
 const Cases = styled.div`
   width: 43%;
-  height: 350px;
+  height: 370px;
   background-color: #393e46;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 const Tasks = styled(Cases)``;

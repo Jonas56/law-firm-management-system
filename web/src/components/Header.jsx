@@ -77,7 +77,7 @@ const LogoContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  font-size: 23px;
+  font-size: 19px;
   * {
     cursor: pointer;
   }

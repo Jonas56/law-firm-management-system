@@ -30,6 +30,7 @@ a {
 }
 .content-container * {
   z-index: 1;
+  padding: 1.4rem auto;
 }
 
 body {

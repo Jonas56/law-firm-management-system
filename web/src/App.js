@@ -1,11 +1,17 @@
 
 import AppRouter from './app-router/AppRouter';
-import './App.css';
+import { Provider } from 'react-redux';
+import store from './redux/store/store'
+
+const lawStore = store();
 
 function App() {
   return (
     <div className="App">
-      <AppRouter />
+      <Provider store={lawStore}>
+        <AppRouter />
+      </Provider>
+     
     </div>
   );
 }
