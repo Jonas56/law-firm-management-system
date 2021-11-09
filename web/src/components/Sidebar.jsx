@@ -51,7 +51,7 @@ export default Sidebar;
 
 const Wrapper = styled.div`
   position: fixed;
-  width: 18%;
+  width: 250px;
   height: 100vh;
   top: 0;
   left: 0;
@@ -59,12 +59,12 @@ const Wrapper = styled.div`
   background-color: black;
   transition: transform 0.5s ease;
   z-index: 100;
+  opacity: 0.92;
   transform: ${(props) =>
     props.active ? "translateX(0%)" : "translateX(-100%)"};
 
   @media screen and (max-width: 900px) {
     width: 100%;
-    opacity: 0.95;
   }
 `;
 const Container = styled.div`
