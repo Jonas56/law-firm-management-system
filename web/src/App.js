@@ -6,6 +6,7 @@ import store from './redux/store/store'
 const lawStore = store();
 
 function App() {
+
   return (
     <div className="App">
       <Provider store={lawStore}>

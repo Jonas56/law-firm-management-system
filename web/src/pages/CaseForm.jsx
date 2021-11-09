@@ -22,7 +22,7 @@ const CaseForm = (props) => {
     e.preventDefault();
     const { title, court, description } = state;
     console.log(props);
-    if (title.length === 0 || court.length === 0 || description.length === 0) {
+    if (title.length === 0 || court.length === 0 || description.length == 0) {
       alert("Required files are empty");
     } else {
       props.dispatch(addCase(state));
