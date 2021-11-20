@@ -52,7 +52,7 @@ const errorHandling = (error, req, res, next) => {
       error: "Provided credentials already exists",
     });
   } else if (error.name === "JsonWebTokenError") {
-    return res.status(400).send({
+    return res.status(401).send({
       error: "Invalid token",
     });
   }

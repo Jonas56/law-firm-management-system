@@ -31,8 +31,8 @@ const cases = {
 // Users Data
 const user = {
   full_name: faker.name.findName(),
-  email: faker.internet.email(),
-  password: faker.internet.password(),
+  email: "jonas@email.com",
+  password: "Jonas@123",
   createdAt: new Date(),
   updatedAt: new Date(),
 };
