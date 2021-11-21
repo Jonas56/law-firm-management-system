@@ -1,10 +1,10 @@
 const express = require("express");
 require("express-async-errors");
 const { sequelize } = require("./models");
-const caseRouter = require("./routes/cases");
-const userRouter = require("./routes/userRouter");
-const loginRouter = require("./routes/loginRouter");
+
 const cors = require("cors");
+const api = require("./routes/api");
+
 
 const logger = require("./utils/logger");
 const path = require("path");
@@ -28,9 +28,7 @@ const main = async () => {
 
 main();
 
-app.use("/api/cases", middleware.userAuthentication, caseRouter);
-app.use("/api/users", userRouter);
-app.use("/api/login", loginRouter);
+app.use("/v1", api);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
