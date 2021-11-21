@@ -9,7 +9,6 @@ const create = async (req, res) => {
   const body = req.body;
   const validPassword =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-  console.log(validPassword.test(body.password));
   if (!body.password || !validPassword.test(body.password)) {
     return res.status(400).json({
       error:

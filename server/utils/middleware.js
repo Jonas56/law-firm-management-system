@@ -45,21 +45,38 @@ const errorHandling = (error, req, res, next) => {
     return res.status(400).send({ error: "Cannot find the requested data" });
   } else if (error.name === "SequelizeForeignKeyConstraintError") {
     return res.status(400).send({
-      error: `Cannot add the following data reason: ${error.message}`,
+      error:
+        "Cannot add the following data reason: foreign key constraint error",
     });
   } else if (error.name === "SequelizeUniqueConstraintError") {
     return res.status(400).send({
-      error: "Provided credentials already exists",
+      error: "Provided data already exists",
     });
   } else if (error.name === "JsonWebTokenError") {
     return res.status(401).send({
       error: "Invalid token",
+    });
+  } else if (error.name === "TokenExpiredError") {
+    return res.status(401).json({
+      error: "token expired",
     });
   }
 
   res.status(400).send({ error: error.message });
   next();
 };
+
+// TODO: Chaining middleware
+// var middleware = {
+//   requireAuthentication: function (req, res, next) {
+//     console.log("private route list!");
+//     next();
+//   },
+//   logger: function (req, res, next) {
+//     console.log("Original request hit : " + req.originalUrl);
+//     next();
+//   },
+// };
 
 module.exports = {
   requestLogger,

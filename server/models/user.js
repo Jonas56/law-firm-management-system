@@ -56,8 +56,6 @@ module.exports = (sequelize, DataTypes) => {
     if (user.password) {
       const saltRounds = 10;
       user.password = await bcrypt.hash(user.password, saltRounds);
-    } else {
-      user.password = null;
     }
   });
   return User;
