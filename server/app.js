@@ -1,13 +1,17 @@
 const express = require("express");
 require("express-async-errors");
 const { sequelize } = require("./models");
+
+const cors = require("cors");
 const api = require("./routes/api");
+
 
 const logger = require("./utils/logger");
 const path = require("path");
 const middleware = require("./utils/middleware");
 
 const app = express();
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
 app.use(middleware.requestLogger);
