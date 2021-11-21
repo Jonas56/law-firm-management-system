@@ -4,12 +4,14 @@ const { sequelize } = require("./models");
 const caseRouter = require("./routes/cases");
 const userRouter = require("./routes/userRouter");
 const loginRouter = require("./routes/loginRouter");
+const cors = require("cors");
 
 const logger = require("./utils/logger");
 const path = require("path");
 const middleware = require("./utils/middleware");
 
 const app = express();
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "build")));
 app.use(middleware.requestLogger);
