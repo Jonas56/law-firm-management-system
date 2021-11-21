@@ -11,10 +11,7 @@
     "build:ui": "rm -rf build && cd ../web && npm run build --prod && cp -r build ../server",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail",
-    "start:test": "cross-env NODE_ENV=test node index.js",
-    "migrate": "sequelize-cli db:migrate --from 20211023211352-create-case.js --to 20211024171700-create-client.js && sequelize-cli db:migrate",
-    "migrate:undo:all": "sequelize-cli db:migrate:undo --name 20211023211352-create-case.js && sequelize-cli db:migrate:undo:all",
-    "seed": "sequelize-cli db:seed --seed 20211029161101-demo-user.js  && sequelize-cli db:seed --seed 20211029154655-demo-client.js && sequelize-cli db:seed --seed 20211029153645-demo-case.js"
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "",
   "license": "ISC",

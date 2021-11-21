@@ -9,8 +9,8 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-  const objCase = { ...req.body };
-  const case_law = await Case.create({ ...objCase });
+  const newCase = { ...req.body };
+  const case_law = await Case.create({ ...newCase });
   return res.status(201).json(case_law);
 }
 
@@ -38,13 +38,12 @@ async function deleteCase(req, res) {
 
 async function updateCase(req, res) {
   const id = Number(req.params.id);
-  const userId = 1;
   const case_law = await Case.findOne({
     where: { id, userId: req.body.userId },
   });
 
   const case_test = await case_law.update(
-    { ...req.body, userId },
+    { ...req.body, userId: req.body.userId },
     { where: { id }, include: "client" }
   );
   if (case_test) {
