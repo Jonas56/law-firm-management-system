@@ -5,7 +5,6 @@ const { sequelize } = require("./models");
 const cors = require("cors");
 const api = require("./routes/api");
 
-
 const logger = require("./utils/logger");
 const path = require("path");
 const middleware = require("./utils/middleware");
