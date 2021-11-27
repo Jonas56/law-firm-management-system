@@ -1,4 +1,4 @@
-const { Case, Client, User } = require("../../models");
+const { Case, Client, User, sequelize } = require("../../models");
 const helper = require("./helper.cases");
 const app = require("../../app");
 const request = require("supertest");
@@ -15,10 +15,10 @@ beforeEach(async () => {
   await Case.create({ ...helper.cases });
 });
 
-describe("GET /api/cases", () => {
+describe("GET /v1/api/cases", () => {
   test("should return all cases", async () => {
     const logedInUser = await request(app)
-      .post("/api/login")
+      .post("/v1/api/login")
       .send({
         email: "jonas@email.com",
         password: "Jonas@123",
@@ -26,17 +26,17 @@ describe("GET /api/cases", () => {
       .set("Content-Type", "application/json");
 
     const response = await request(app)
-      .get("/api/cases")
+      .get("/v1/api/cases")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .expect(200);
     expect(response.body.length).toBe(1); // Just one Case inserted
   });
   test("should return error if not authorized", async () => {
-    await request(app).get("/api/cases").expect(401);
+    await request(app).get("/v1/api/cases").expect(401);
   });
 });
 
-describe("POST /api/cases", () => {
+describe("POST /v1/api/cases", () => {
   const insertedCase = {
     title: "Case example",
     description: "Case description",
@@ -58,13 +58,13 @@ describe("POST /api/cases", () => {
   };
 
   test("should return the last inserted case", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
 
     const response = await request(app)
-      .post("/api/cases")
+      .post("/v1/api/cases")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .send({
         ...insertedCase,
@@ -77,13 +77,13 @@ describe("POST /api/cases", () => {
   });
 
   test("should throw an error when inserting false data", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
 
     const response = await request(app)
-      .post("/api/cases")
+      .post("/v1/api/cases")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .send({
         ...insertedCaseFalse,
@@ -96,12 +96,12 @@ describe("POST /api/cases", () => {
     });
   });
   test("should return error if not authorized", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "s@123",
     });
     await request(app)
-      .post("/api/cases")
+      .post("/v1/api/cases")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .send({
         ...insertedCase,
@@ -112,33 +112,33 @@ describe("POST /api/cases", () => {
   });
 });
 
-describe("GET /api/cases/:id", () => {
+describe("GET /v1/api/cases/:id", () => {
   test("should return a valid case", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
     const response = await request(app)
-      .get("/api/cases/1")
+      .get("/v1/api/cases/1")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .expect(200);
 
     expect(Array(response.body).length).toBe(1);
   });
   test("should return an error when accessing unkonwn Case", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
     const response = await request(app)
-      .get("/api/cases/10")
+      .get("/v1/api/cases/10")
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .expect(400);
     expect(response.body).toEqual({ error: "Case not found" });
   });
 });
 
-describe("DELETE /api/cases/:id", () => {
+describe("DELETE /v1/api/cases/:id", () => {
   const deletedCase = {
     title: "Case example",
     description: "Case description",
@@ -150,12 +150,12 @@ describe("DELETE /api/cases/:id", () => {
     priority: "high",
   };
   test("should succesfully delete a case", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
     await request(app)
-      .post("/api/cases")
+      .post("/v1/api/cases")
       .send({
         ...deletedCase,
         clientId: 1,
@@ -168,14 +168,14 @@ describe("DELETE /api/cases/:id", () => {
     const lastCase = await helper.getLastInsertedCaseId();
 
     const response = await request(app)
-      .delete(`/api/cases/${lastCase.id}`)
+      .delete(`/v1/api/cases/${lastCase.id}`)
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .expect(200);
 
     expect(response.body).toEqual({ message: "Case deleted succesfully" });
   });
   test("should return error when deleting unkonwn Case", async () => {
-    const logedInUser = await request(app).post("/api/login").send({
+    const logedInUser = await request(app).post("/v1/api/login").send({
       email: "jonas@email.com",
       password: "Jonas@123",
     });
@@ -183,10 +183,14 @@ describe("DELETE /api/cases/:id", () => {
     const id = lastCase.id + 10;
 
     const response = await request(app)
-      .delete(`/api/cases/${id}`)
+      .delete(`/v1/api/cases/${id}`)
       .set({ Authorization: "bearer " + logedInUser.body.token })
       .expect(400);
 
     expect(response.body).toEqual({ error: "Cannot find the requested data" });
   });
+});
+
+afterAll(async () => {
+  await sequelize.close();
 });
