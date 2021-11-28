@@ -4,20 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-server": "npm install --prefix server",
-    "install-client": "npm install --prefix web",
-    "install-app": "npm install-server && npm install-client",
+    "install-server": "cd ./server && npm install",
+    "install-client": "cd ./web && npm install",
+    "install-app": "npm run install-server && npm run install-client",
     "server": "npm run dev --prefix server",
+    "start-prod": "npm start --prefix server",
+    "test-server": "npm run test --prefix server",
     "client": "npm start --prefix web",
-    "build-server": "npm run build:ui --prefix server",
+    "build": "npm run build:ui --prefix server",
     "deploy": "git push heroku main",
-    "start-app": "npm start --prefix server"
+    "lint": "npm run lint --prefix server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jonas56/law-firm-management-system.git"
   },
-  "author": "",
+  "author": "Jonas56 & laous",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Jonas56/law-firm-management-system/issues"
