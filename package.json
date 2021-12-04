@@ -11,7 +11,7 @@
     "start-prod": "npm start --prefix server",
     "test-server": "npm run test --prefix server",
     "client": "npm start --prefix web",
-    "build": "cd ./server && npm run build:ui",
+    "build-app": "cd ./server && npm run build-ui",
     "deploy": "git push heroku main",
     "lint": "npm run lint --prefix server"
   },
