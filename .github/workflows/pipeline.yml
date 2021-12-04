@@ -1,18 +1,48 @@
-name: Discord message
+name: Deployment pipeline
+
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
-  build:
-    name: Push notification
-    runs-on: ubuntu-latest
+  build_test_pipeline:
+    runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@master
-      - name: Discord Commits
-        uses: Sniddl/discord-commits@v1.3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "Successful commit to https://github.com/{{ github.context.payload.repository.owner.name }}/{{ github.context.payload.repository.name}}.\n Diff: {{ github.context.payload.compare }}"
-          embed: '{ "title": "{{ commit.title }}", "description": "{{ commit.description }}", "url": "{{ commit.url }}", "author": { "name": "{{ commit.author.name }} ({{ commit.author.username }})", "icon_url": "https://avatars.githubusercontent.com/{{ commit.author.username }}"} }'
+          node-version: "14.x"
+      - name: Install dependencies
+        run: npm run install-app
+      # - name: lint checking
+      #   run: npm run lint
+      - name: build
+        run: npm run build-app
+      # - name: test
+      #   run: npm run test-server
+      # ****End to end Testing***** #
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     command: npm run test:e2e
+      #     start: npm run start-prod
+      #     wait-on: http://localhost:5000
+      - name: Deploy
+        if: ${{ github.event_name == 'push' }}
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "law-firm-management-sys" #Must be unique in Heroku
+          heroku_email: "youneslamkhanter02@gmail.com"
+          # healthcheck: "law-firm-management-sys.herokuapp.com/version"
+          # checkString: "1.1.0"
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
