@@ -21,7 +21,7 @@ jobs:
       # - name: lint checking
       #   run: npm run lint
       - name: build
-        run: ls -l server && npm run build
+        run: ls -l server && ls -l web && npm run build
       - name: test
         run: npm run test-server
       # ****End to end Testing***** #
