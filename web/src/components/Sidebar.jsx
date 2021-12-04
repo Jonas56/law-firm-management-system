@@ -78,9 +78,9 @@ const Container = styled.div`
   z-index: 100;
 `;
 
-const Logo = styled.div`
-  cursor: pointer;
-`;
+// const Logo = styled.div`
+//   cursor: pointer;
+// `;
 const Menu1 = styled.div`
   display: flex;
   flex-direction: column;
