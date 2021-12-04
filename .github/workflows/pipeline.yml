@@ -21,9 +21,9 @@ jobs:
       # - name: lint checking
       #   run: npm run lint
       - name: build
-        run: ls -l server && ls -l web && npm run build-app
-      - name: test
-        run: npm run test-server
+        run: npm run build-app
+      # - name: test
+      #   run: npm run test-server
       # ****End to end Testing***** #
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
