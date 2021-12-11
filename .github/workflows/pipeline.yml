@@ -3,9 +3,9 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - main
+      - [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
     types: [opened, synchronize]
 
 jobs:
@@ -18,12 +18,17 @@ jobs:
           node-version: "14.x"
       - name: Install dependencies
         run: npm run install-app
-      # - name: lint checking
-      #   run: npm run lint
+      - name: lint checking
+        run: npm run lint
       - name: build
         run: npm run build-app
-      # - name: test
-      #   run: npm run test-server
+      - name: test
+        run: npm run test-server
+        env:
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
       # ****End to end Testing***** #
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
@@ -32,16 +37,16 @@ jobs:
       #     start: npm run start-prod
       #     wait-on: http://localhost:5000
       - name: Deploy
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.base_ref == 'main' }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "law-firm-management-sys" #Must be unique in Heroku
+          heroku_app_name: "law-firm-management-sys" # Must be unique in Heroku
           heroku_email: "youneslamkhanter02@gmail.com"
           # healthcheck: "law-firm-management-sys.herokuapp.com/version"
           # checkString: "1.1.0"
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.base_ref == 'main' }}
         uses: anothrNick/github-tag-action@1.33.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
