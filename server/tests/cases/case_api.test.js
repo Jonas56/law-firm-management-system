@@ -17,6 +17,12 @@ beforeAll(async () => {
   await Case.create({ ...helper.cases });
 });
 
+describe("Health check", () => {
+  test("should return 200 OK", async () => {
+    await request(app).get("/v1/health").expect(200);
+  });
+});
+
 describe("GET /v1/api/cases", () => {
   test("should return all cases", async () => {
     const logedInUser = await request(app)

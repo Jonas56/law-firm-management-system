@@ -31,6 +31,7 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+          SECRET: 0
       # ****End to end Testing***** #
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
@@ -39,7 +40,7 @@ jobs:
       #     start: npm run start-prod
       #     wait-on: http://localhost:5000
       - name: Deploy
-        if: ${{ github.base_ref == 'main' }}
+        if: ${{ github.ref == 'main' }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -47,11 +48,9 @@ jobs:
           heroku_email: "youneslamkhanter02@gmail.com"
           # healthcheck: "law-firm-management-sys.herokuapp.com/version"
           # checkString: "1.1.0"
-
       - name: Bump version and push tag
-        if: ${{ github.base_ref == 'main' }}
+        if: ${{ github.ref == 'main' }}
         uses: anothrNick/github-tag-action@1.33.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-
