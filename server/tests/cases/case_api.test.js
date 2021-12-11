@@ -33,6 +33,7 @@ describe("GET /v1/api/cases", () => {
       })
       .set("Content-Type", "application/json");
 
+    console.log(logedInUser.body);
     const response = await request(app)
       .get("/v1/api/cases")
       .set({ Authorization: "bearer " + logedInUser.body.token })
@@ -44,160 +45,160 @@ describe("GET /v1/api/cases", () => {
   });
 });
 
-describe("POST /v1/api/cases", () => {
-  const insertedCase = {
-    title: "Case example",
-    description: "Case description",
-    judge: "Jonas Tesla",
-    enemy: "Vladimir Lennin",
-    place: " Dalas",
-    result: "Fucked up",
-    status: "opened",
-    priority: "high",
-  };
-  const insertedCaseFalse = {
-    description: "Case description",
-    judge: "Jonas Tesla",
-    enemy: "Vladimir Lennin",
-    place: " Dalas",
-    result: "Fucked up",
-    status: "opened",
-    priority: "high",
-  };
+// describe("POST /v1/api/cases", () => {
+//   const insertedCase = {
+//     title: "Case example",
+//     description: "Case description",
+//     judge: "Jonas Tesla",
+//     enemy: "Vladimir Lennin",
+//     place: " Dalas",
+//     result: "Fucked up",
+// status: "opened",
+//     priority: "high",
+//   };
+//   const insertedCaseFalse = {
+//     description: "Case description",
+//     judge: "Jonas Tesla",
+//     enemy: "Vladimir Lennin",
+//     place: " Dalas",
+//     result: "Fucked up",
+//     status: "opened",
+//     priority: "high",
+//   };
 
-  test("should return the last inserted case", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
+//   test("should return the last inserted case", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
 
-    const response = await request(app)
-      .post("/v1/api/cases")
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .send({
-        ...insertedCase,
-        clientId: 1,
-        userId: 2,
-      })
-      .set("Content-Type", "application/json")
-      .expect(201);
-    expect(response.body).toEqual(insertedCase);
-  });
+//     const response = await request(app)
+//       .post("/v1/api/cases")
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .send({
+//         ...insertedCase,
+//         clientId: 1,
+//         userId: 2,
+//       })
+//       .set("Content-Type", "application/json")
+//       .expect(201);
+//     expect(response.body).toEqual(insertedCase);
+//   });
 
-  test("should throw an error when inserting false data", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
+//   test("should throw an error when inserting false data", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
 
-    const response = await request(app)
-      .post("/v1/api/cases")
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .send({
-        ...insertedCaseFalse,
-        clientId: 1,
-      })
-      .set("Content-Type", "application/json")
-      .expect(400);
-    expect(response.body).toEqual({
-      error: "notNull Violation: The case should contain a title field",
-    });
-  });
-  test("should return error if not authorized", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "s@123",
-    });
-    await request(app)
-      .post("/v1/api/cases")
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .send({
-        ...insertedCase,
-        clientId: 1,
-      })
-      .set("Content-Type", "application/json")
-      .expect(401);
-  });
-});
+//     const response = await request(app)
+//       .post("/v1/api/cases")
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .send({
+//         ...insertedCaseFalse,
+//         clientId: 1,
+//       })
+//       .set("Content-Type", "application/json")
+//       .expect(400);
+//     expect(response.body).toEqual({
+//       error: "notNull Violation: The case should contain a title field",
+//     });
+//   });
+//   test("should return error if not authorized", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "s@123",
+//     });
+//     await request(app)
+//       .post("/v1/api/cases")
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .send({
+//         ...insertedCase,
+//         clientId: 1,
+//       })
+//       .set("Content-Type", "application/json")
+//       .expect(401);
+//   });
+// });
 
-describe("GET /v1/api/cases/:id", () => {
-  test("should return a valid case", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
-    const response = await request(app)
-      .get("/v1/api/cases/1")
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .expect(200);
+// describe("GET /v1/api/cases/:id", () => {
+//   test("should return a valid case", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
+//     const response = await request(app)
+//       .get("/v1/api/cases/1")
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .expect(200);
 
-    expect(Array(response.body).length).toBe(1);
-  });
-  test("should return an error when accessing unkonwn Case", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
-    const response = await request(app)
-      .get("/v1/api/cases/10")
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .expect(400);
-    expect(response.body).toEqual({ error: "Case not found" });
-  });
-});
+//     expect(Array(response.body).length).toBe(1);
+//   });
+//   test("should return an error when accessing unkonwn Case", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
+//     const response = await request(app)
+//       .get("/v1/api/cases/10")
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .expect(400);
+//     expect(response.body).toEqual({ error: "Case not found" });
+//   });
+// });
 
-describe("DELETE /v1/api/cases/:id", () => {
-  const deletedCase = {
-    title: "Case example",
-    description: "Case description",
-    judge: "Jonas Tesla",
-    enemy: "Vladimir Lennin",
-    place: " Dalas",
-    result: "Fucked up",
-    status: "opened",
-    priority: "high",
-  };
-  test("should succesfully delete a case", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
-    await request(app)
-      .post("/v1/api/cases")
-      .send({
-        ...deletedCase,
-        clientId: 1,
-        userId: 1,
-      })
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .set("Content-Type", "application/json")
-      .expect(201);
+// describe("DELETE /v1/api/cases/:id", () => {
+//   const deletedCase = {
+//     title: "Case example",
+//     description: "Case description",
+//     judge: "Jonas Tesla",
+//     enemy: "Vladimir Lennin",
+//     place: " Dalas",
+//     result: "Fucked up",
+//     status: "opened",
+//     priority: "high",
+//   };
+//   test("should succesfully delete a case", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
+//     await request(app)
+//       .post("/v1/api/cases")
+//       .send({
+//         ...deletedCase,
+//         clientId: 1,
+//         userId: 1,
+//       })
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .set("Content-Type", "application/json")
+//       .expect(201);
 
-    const lastCase = await helper.getLastInsertedCaseId();
+//     const lastCase = await helper.getLastInsertedCaseId();
 
-    const response = await request(app)
-      .delete(`/v1/api/cases/${lastCase.id}`)
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .expect(200);
+//     const response = await request(app)
+//       .delete(`/v1/api/cases/${lastCase.id}`)
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .expect(200);
 
-    expect(response.body).toEqual({ message: "Case deleted succesfully" });
-  });
-  test("should return error when deleting unkonwn Case", async () => {
-    const logedInUser = await request(app).post("/v1/api/login").send({
-      email: "jonas@email.com",
-      password: "Jonas@123",
-    });
-    const lastCase = await helper.getLastInsertedCaseId();
-    const id = lastCase.id + 10;
+//     expect(response.body).toEqual({ message: "Case deleted succesfully" });
+//   });
+//   test("should return error when deleting unkonwn Case", async () => {
+//     const logedInUser = await request(app).post("/v1/api/login").send({
+//       email: "jonas@email.com",
+//       password: "Jonas@123",
+//     });
+//     const lastCase = await helper.getLastInsertedCaseId();
+//     const id = lastCase.id + 10;
 
-    const response = await request(app)
-      .delete(`/v1/api/cases/${id}`)
-      .set({ Authorization: "bearer " + logedInUser.body.token })
-      .expect(400);
+//     const response = await request(app)
+//       .delete(`/v1/api/cases/${id}`)
+//       .set({ Authorization: "bearer " + logedInUser.body.token })
+//       .expect(400);
 
-    expect(response.body).toEqual({ error: "Cannot find the requested data" });
-  });
-});
+//     expect(response.body).toEqual({ error: "Cannot find the requested data" });
+//   });
+// });
 
 afterAll(async () => {
   await sequelize.close();
