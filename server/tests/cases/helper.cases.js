@@ -3,6 +3,7 @@ const { Case } = require("../../models");
 
 // Client Data
 const client = {
+  id: 1,
   full_name: faker.name.findName(),
   age: faker.datatype.number(80),
   phone_number: faker.phone.phoneNumber(),
@@ -16,6 +17,7 @@ const client = {
 
 // Cases data
 const cases = {
+  id: 1,
   userId: 1,
   clientId: 1,
   title: "Case",
@@ -30,6 +32,7 @@ const cases = {
 
 // Users Data
 const user = {
+  id: 1,
   full_name: faker.name.findName(),
   email: "jonas@email.com",
   password: "Jonas@123",

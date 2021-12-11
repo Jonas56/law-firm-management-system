@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Client.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       full_name: {
         type: DataTypes.STRING,
         allowNull: false,
