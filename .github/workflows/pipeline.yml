@@ -16,13 +16,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "14.x"
-      - name: create env file
-        run: |
-          touch server/.env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> server/.env
-          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> server/.env
-          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> server/.env
-          echo DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} >> server/.env
       - name: Install dependencies
         run: npm run install-app
       - name: lint checking
@@ -33,6 +26,11 @@ jobs:
         run: npm run build-app
       - name: test
         run: npm run test-server
+        env:
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
       # ****End to end Testing***** #
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
