@@ -31,6 +31,7 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+          SECRET: 0
       # ****End to end Testing***** #
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
