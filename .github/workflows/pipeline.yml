@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "14.x"
+      - name: Branch ref name
+        run: echo ${{ github.ref_name }}
       - name: Install dependencies
         run: npm run install-app
       - name: lint checking
@@ -40,7 +42,7 @@ jobs:
       #     start: npm run start-prod
       #     wait-on: http://localhost:5000
       - name: Deploy
-        if: ${{ github.ref == 'main' }}
+        if: ${{ github.ref_name == 'main' }}
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -49,7 +51,7 @@ jobs:
           # healthcheck: "law-firm-management-sys.herokuapp.com/version"
           # checkString: "1.1.0"
       - name: Bump version and push tag
-        if: ${{ github.ref == 'main' }}
+        if: ${{ github.ref_name == 'main' }}
         uses: anothrNick/github-tag-action@1.33.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
