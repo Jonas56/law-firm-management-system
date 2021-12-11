@@ -19,10 +19,10 @@ jobs:
       - name: create env file
         run: |
           touch server/.env
-          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
-          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-          echo DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> server/.env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> server/.env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> server/.env
+          echo DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} >> server/.env
       - name: Install dependencies
         run: npm run install-app
       - name: lint checking
