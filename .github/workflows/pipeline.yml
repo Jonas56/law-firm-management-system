@@ -3,7 +3,7 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - [main, dev]
+      - main
   pull_request:
     branches: [main, dev]
     types: [opened, synchronize]
@@ -20,6 +20,8 @@ jobs:
         run: npm run install-app
       - name: lint checking
         run: npm run lint
+        env:
+          NODE_ENV: production
       - name: build
         run: npm run build-app
       - name: test
