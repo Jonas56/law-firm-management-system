@@ -3,7 +3,9 @@ const helper = require("./helper.cases");
 const app = require("../../app");
 const request = require("supertest");
 
-beforeEach(async () => {
+jest.setTimeout(5000);
+
+beforeAll(async () => {
   // clear database
   await Case.destroy({ where: {}, truncate: true });
   await Client.destroy({ where: {}, truncate: true });

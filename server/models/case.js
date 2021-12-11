@@ -25,13 +25,20 @@ module.exports = (sequelize, DataTypes) => {
   }
   Case.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       userId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       clientId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
-
       title: {
         type: DataTypes.STRING,
         allowNull: false,
